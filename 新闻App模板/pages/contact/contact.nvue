@@ -1,0 +1,111 @@
+<template>
+	<view class="page">
+		<view class="navbar" :class="{'navbar-active': showTitleView }">
+			<text class="title" v-if="showTitleView">header-title</text>
+		</view>
+		<list ref="list1" class="list">
+			<cell>
+				<uni-flexible class="flexible-view" @flexible0="flexible0" @flexible1="flexible1">
+					<view class="header">
+						<text class="header-title">header-title</text>
+					</view>
+				</uni-flexible>
+			</cell>
+			<cell v-for="(item, index) in dataList" :key="item.id">
+				<view class="list-item">
+					<text>{{item.name}}</text>
+				</view>
+			</cell>
+		</list>
+	</view>
+</template>
+
+<script>
+	import uniFlexible from '@/components/flexible.vue';
+	export default {
+		components: {
+			uniFlexible
+		},
+		data() {
+			return {
+				dataList: [],
+				showTitleView: false
+			}
+		},
+		onReady() {
+			for (var i = 0; i < 30; i++) {
+				this.dataList.push({
+					id: i,
+					name: i
+				});
+			}
+		},
+		methods: {
+			flexible0(e) {
+				this.showTitleView = true;
+			},
+			flexible1(e) {
+				this.showTitleView = false;
+			}
+		}
+	}
+</script>
+
+<style>
+	.page {
+		flex: 1;
+		flex-direction: column;
+	}
+
+	.navbar {
+		flex-direction: row;
+		align-items: center;
+		position: fixed;
+		left: 0;
+		top: 0;
+		right: 0;
+		height: 48px;
+		background-color: rgba(0, 0, 0, .1);
+	}
+
+	.navbar-active {
+		background-color: #007AFF;
+	}
+
+	.title {
+		font-size: 20px;
+		font-weight: bold;
+		color: #ffffff;
+		margin-left: 15px;
+	}
+
+	.header {
+		padding: 100px 10px 20px 20px;
+	}
+
+	.header-title {
+		font-size: 30px;
+		font-weight: bold;
+		color: #ffffff;
+	}
+
+	.list {
+		flex: 1;
+		background-color: lime;
+		padding-top: 40px;
+	}
+
+	.list-item {
+		margin-left: 1px;
+		margin-right: 1px;
+		margin-bottom: 1px;
+		padding: 20px;
+		border-width: 1px;
+		border-style: solid;
+		border-color: #007AFF;
+	}
+
+	.flexible-view {
+		background-color: #f823ff;
+	}
+</style>
